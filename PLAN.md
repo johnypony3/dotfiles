@@ -58,7 +58,24 @@ dotfiles/
 └── PLAN.md                # this file
 ```
 
-### 3. NAS share mount (import from skynet)
+### 3. Homebrew packages
+
+Codify all currently installed brew formulae and casks into a `brew` role.
+Run `brew bundle dump` to snapshot current state, then manage via Brewfile
+or an explicit package list in the role.
+
+### 4. iTerm2 configuration
+
+Codify iTerm2 preferences. iTerm2 can export/import a `.itermocil` or
+preferences plist. Use `com.googlecode.iterm2` defaults or deploy the
+plist via Ansible.
+
+### 5. BetterTouchTool configuration
+
+Codify BTT configuration. BTT exports a `.bttpreset` file.
+Deploy via Ansible and trigger an import on first run.
+
+### 6. NAS share mount (import from skynet)
 
 There is uncommitted work in `../skynet` (the `mount-nas-mac.yml` playbook and
 related files) that configures the Mac NAS mount via LaunchAgent. That work

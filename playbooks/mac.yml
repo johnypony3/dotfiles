@@ -7,4 +7,5 @@
   roles:
     - role: keyboard
     - role: shares
+    - role: tmux
     - role: zsh

@@ -1,0 +1,47 @@
+---
+- name: Install tmux
+  ansible.builtin.command:
+    cmd: brew install tmux
+    creates: /opt/homebrew/bin/tmux
+
+- name: Ensure ~/.tmux/plugins directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.tmux/plugins"
+    state: directory
+    mode: "0755"
+
+- name: Deploy .tmux.conf
+  ansible.builtin.copy:
+    src: tmux.conf
+    dest: "{{ ansible_user_dir }}/.tmux.conf"
+    mode: "0644"
+
+- name: Deploy cheatsheet
+  ansible.builtin.copy:
+    src: cheatsheet.txt
+    dest: "{{ ansible_user_dir }}/.tmux/cheatsheet.txt"
+    mode: "0644"
+
+- name: Install tmux-resurrect
+  ansible.builtin.git:
+    repo: https://github.com/tmux-plugins/tmux-resurrect
+    dest: "{{ ansible_user_dir }}/.tmux/plugins/tmux-resurrect"
+    version: master
+    depth: 1
+    update: false
+
+- name: Install tmux-continuum
+  ansible.builtin.git:
+    repo: https://github.com/tmux-plugins/tmux-continuum
+    dest: "{{ ansible_user_dir }}/.tmux/plugins/tmux-continuum"
+    version: master
+    depth: 1
+    update: false
+
+- name: Install tmux-yank
+  ansible.builtin.git:
+    repo: https://github.com/tmux-plugins/tmux-yank
+    dest: "{{ ansible_user_dir }}/.tmux/plugins/tmux-yank"
+    version: master
+    depth: 1
+    update: false

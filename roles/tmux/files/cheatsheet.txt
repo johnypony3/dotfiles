@@ -1,0 +1,43 @@
+ ╔══════════════════════════════════════════════════════════════╗
+ ║                     TMUX CHEAT SHEET                        ║
+ ║                   prefix = Ctrl-b  or  Ctrl-a               ║
+ ╠══════════════════════════════════════════════════════════════╣
+ ║  SESSIONS                                                    ║
+ ║   prefix s        list/switch sessions                       ║
+ ║   prefix $        rename session                             ║
+ ║   prefix d        detach (session stays running)             ║
+ ║   prefix Ctrl-s   save session  (resurrect)                  ║
+ ║   prefix Ctrl-r   restore session  (resurrect)               ║
+ ╠══════════════════════════════════════════════════════════════╣
+ ║  WINDOWS                                                     ║
+ ║   prefix c        new window                                 ║
+ ║   prefix ,        rename window                              ║
+ ║   prefix n / p    next / prev window                         ║
+ ║   prefix 1-9      jump to window by number                   ║
+ ║   prefix w        visual window list                         ║
+ ║   prefix &        kill window                                ║
+ ╠══════════════════════════════════════════════════════════════╣
+ ║  PANES                                                       ║
+ ║   prefix |        split vertical                             ║
+ ║   prefix -        split horizontal                           ║
+ ║   prefix h/j/k/l  navigate panes  (vim-style)               ║
+ ║   prefix H/J/K/L  resize pane  (repeatable)                 ║
+ ║   prefix z        zoom pane fullscreen (toggle)              ║
+ ║   prefix x        kill pane                                  ║
+ ║   prefix !        break pane into new window                 ║
+ ╠══════════════════════════════════════════════════════════════╣
+ ║  COPY MODE                                                   ║
+ ║   prefix [        enter copy mode  (scroll with mouse too)   ║
+ ║   v               begin selection                            ║
+ ║   Ctrl-v          rectangle selection                        ║
+ ║   y               yank to clipboard  (tmux-yank)             ║
+ ║   q / Escape      exit copy mode                             ║
+ ╠══════════════════════════════════════════════════════════════╣
+ ║  MISC                                                        ║
+ ║   prefix t        popup scratch terminal                     ║
+ ║   prefix /        this cheat sheet                           ║
+ ║   prefix r        reload config                              ║
+ ║   prefix ?        show all keybindings                       ║
+ ╚══════════════════════════════════════════════════════════════╝
+
+  Press q or Escape to close

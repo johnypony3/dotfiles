@@ -4,21 +4,14 @@
     cmd: brew install fzf
     creates: /opt/homebrew/bin/fzf
 
-- name: Add tmux session picker to .zshrc
-  ansible.builtin.blockinfile:
-    path: "{{ ansible_user_dir }}/.zshrc"
-    create: true
-    marker: "# {mark} ANSIBLE MANAGED - tmux session picker"
-    block: |
-      if [[ -z "$TMUX" ]]; then
-        if tmux ls &>/dev/null; then
-          session=$(tmux ls -F '#{session_name}' | fzf --prompt='session: ' --height=~40% --reverse)
-          if [[ -n "$session" ]]; then
-            tmux attach -t "$session"
-          else
-            tmux new-session
-          fi
-        else
-          tmux new-session
-        fi
-      fi
+- name: Install Oh My Zsh
+  ansible.builtin.shell:
+    cmd: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    creates: "{{ ansible_user_dir }}/.oh-my-zsh"
+
+- name: Deploy .zshrc
+  ansible.builtin.template:
+    src: zshrc.j2
+    dest: "{{ ansible_user_dir }}/.zshrc"
+    mode: "0644"
+    backup: true
