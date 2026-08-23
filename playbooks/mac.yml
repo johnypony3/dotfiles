@@ -12,3 +12,4 @@
     - role: shares
     - role: tmux
     - role: zsh
+    - role: neovim
