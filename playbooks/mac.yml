@@ -6,4 +6,5 @@
 
   roles:
     - role: keyboard
+    - role: shares
     - role: zsh

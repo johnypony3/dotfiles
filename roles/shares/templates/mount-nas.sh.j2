@@ -1,0 +1,27 @@
+#!/bin/sh
+# {{ ansible_managed }}
+# Mount Drobo NAS SMB shares as this user -- NO sudo required (macOS lets a
+# normal user mount SMB via mount_smbfs). Idempotent: skips shares already
+# mounted. Run at login + periodically by the LaunchAgent, and by hand.
+#
+# Mounting as the user (not root, unlike autofs) means the volume is owned by
+# you, so read/write/delete work with no ownership tricks.
+
+SERVER="{{ smb_server }}"
+SMB_USER="{{ smb_user }}"
+SMB_PASS='{{ smb_nas_password | urlencode }}'   # URL-encoded (e.g. * -> %2A)
+
+mount_share() {
+  share="$1"; mp="$2"
+  /bin/mkdir -p "$mp" 2>/dev/null
+  # already mounted? (match " on <mountpoint> " in the mount table)
+  if /sbin/mount | /usr/bin/grep -qF " on $mp "; then
+    return 0
+  fi
+  # -N: use supplied creds, never prompt.  -o soft: fail fast if NAS is away.
+  /sbin/mount_smbfs -N -o soft "//$SMB_USER:$SMB_PASS@$SERVER/$share" "$mp"
+}
+
+{% for s in smb_shares %}
+mount_share "{{ s.share }}" "{{ nas_home }}/{{ s.mount_point }}"
+{% endfor %}

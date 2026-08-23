@@ -1,0 +1,20 @@
+---
+nas_user: "edward"
+nas_home: "/Users/{{ nas_user }}"
+smb_server: "192.168.9.7"
+smb_user: "edward"
+smb_shares:
+  - { share: "Public", mount_point: "nas/public" }
+  - { share: "Edward", mount_point: "nas/edward" }
+mount_script: "{{ nas_home }}/.local/bin/mount-nas.sh"
+launchagent_label: "com.theemm.nasmount"
+launchagent_plist: "{{ nas_home }}/Library/LaunchAgents/{{ launchagent_label }}.plist"
+remount_interval: 120
+# vault-encrypted SMB password (decrypt with ~/.vault_pass)
+smb_nas_password: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      30653063393562623734633866363838666134336234623365616663643066646337333934656463
+      3730656130663966346537393931333263386230343236630a366163373964386536326230373439
+      62303738363332626264666230386538336632383661316531316465613133396639646564386637
+      3965623832646661390a323735643266326164633536386232396538653836643731373338346136
+      3637

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- {{ ansible_managed }} -->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>{{ launchagent_label }}</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>{{ mount_script }}</string>
+    </array>
+    <!-- mount at login, and re-check every {{ remount_interval }}s so shares
+         reconnect after the NAS returns / the laptop rejoins the LAN -->
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StartInterval</key>
+    <integer>{{ remount_interval }}</integer>
+    <key>ProcessType</key>
+    <string>Background</string>
+    <key>StandardOutPath</key>
+    <string>{{ nas_home }}/Library/Logs/nasmount.log</string>
+    <key>StandardErrorPath</key>
+    <string>{{ nas_home }}/Library/Logs/nasmount.log</string>
+</dict>
+</plist>

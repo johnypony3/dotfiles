@@ -1,0 +1,64 @@
+---
+# One-time prerequisite if the old autofs setup is still installed:
+#   sudo rm -f /etc/auto_smb /etc/auto_nfs
+#   sudo sed -i '' '/^\/-[[:space:]]*auto_smb/d;/^\/-[[:space:]]*auto_nfs/d' /etc/auto_master
+#   sudo automount -vc
+
+- name: Ensure required directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "{{ nas_home }}/nas"
+    - "{{ nas_home }}/.local/bin"
+    - "{{ nas_home }}/Library/LaunchAgents"
+    - "{{ nas_home }}/Library/Logs"
+
+- name: Install the SMB mount script (contains password → 0700)
+  ansible.builtin.template:
+    src: mount-nas.sh.j2
+    dest: "{{ mount_script }}"
+    mode: "0700"
+
+- name: Install the LaunchAgent
+  ansible.builtin.template:
+    src: nasmount.plist.j2
+    dest: "{{ launchagent_plist }}"
+    mode: "0644"
+
+- name: Determine this user's UID
+  ansible.builtin.command: id -u
+  register: uid_out
+  changed_when: false
+
+- name: (Re)load the LaunchAgent in the GUI session
+  ansible.builtin.shell: |
+    launchctl bootout gui/{{ uid_out.stdout }}/{{ launchagent_label }} 2>/dev/null || true
+    launchctl bootstrap gui/{{ uid_out.stdout }} "{{ launchagent_plist }}"
+  register: bootstrap
+  changed_when: bootstrap.rc == 0
+  failed_when: false
+
+- name: Remove stale root-owned mountpoint triggers (leftover from autofs)
+  ansible.builtin.shell:
+    cmd: >
+      mp="{{ nas_home }}/{{ item.mount_point }}";
+      if [ -d "$mp" ] && ! /sbin/mount | grep -qF " on $mp " &&
+         [ -z "$(ls -A "$mp" 2>/dev/null)" ] &&
+         [ "$(stat -f '%u' "$mp")" != "$(id -u)" ]; then rmdir "$mp"; fi
+  loop: "{{ smb_shares }}"
+  changed_when: false
+
+- name: Mount now (immediate; LaunchAgent handles login/reconnect)
+  ansible.builtin.command: "{{ mount_script }}"
+  changed_when: true
+
+- name: Show active NAS mounts
+  ansible.builtin.command: mount
+  register: mnt
+  changed_when: false
+
+- name: Result
+  ansible.builtin.debug:
+    msg: "{{ mnt.stdout_lines | select('search', smb_server) | list }}"
