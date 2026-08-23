@@ -2,5 +2,5 @@
 - name: Clone NvChad starter
   ansible.builtin.git:
     repo: https://github.com/NvChad/starter
-    dest: "{{ ansible_user_dir }}/.config/nvim"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/nvim"
     update: false

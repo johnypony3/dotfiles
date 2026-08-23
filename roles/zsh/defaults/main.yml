@@ -1,2 +1,2 @@
 ---
-kubeconfig_path: "{{ ansible_user_dir }}/Documents/git/skynet/kubeconfig-zorlac"
+kubeconfig_path: "{{ ansible_facts['user_dir'] }}/Documents/git/skynet/kubeconfig-zorlac"
