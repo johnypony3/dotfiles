@@ -1,0 +1,62 @@
+---
+brew_taps:
+  - anthropics/claude
+  - hashicorp/tap
+  - hudochenkov/sshpass
+
+brew_formulae:
+  - ansible
+  - ansible-lint
+  - argocd
+  - awscli
+  - black
+  - docker
+  - ffmpeg
+  - fzf
+  - gh
+  - go
+  - golangci-lint
+  - handbrake
+  - helm
+  - isort
+  - kubernetes-cli
+  - mongosh
+  - neovim
+  - node
+  - ponysay
+  - poppler
+  - prettier
+  - qpdf
+  - rclone
+  - ruff
+  - stylua
+  - tesseract
+  - tmux
+  - transmission-cli
+  - yamllint
+
+brew_casks:
+  - 1password
+  - bettertouchtool
+  - claude
+  - claude-code
+  - docker-desktop
+  - font-courier-prime
+  - google-chrome
+  - handbrake-app
+  - home-assistant
+  - iterm2
+  - launchcontrol
+  - mongodb-compass
+  - mqttx
+  - plex
+  - qbittorrent
+  - tailscale-app
+  - transmission
+  - visual-studio-code
+  - vlc
+  - zoom
+
+brew_vscode_extensions:
+  - anthropic.claude-code
+  - tomoki1207.pdf

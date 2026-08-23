@@ -1,9 +1,4 @@
 ---
-- name: Install Neovim
-  community.general.homebrew:
-    name: neovim
-    state: present
-
 - name: Create Neovim config directory
   ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.config/nvim"

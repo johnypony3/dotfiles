@@ -4,14 +4,24 @@
     cmd: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     creates: /opt/homebrew/bin/brew
 
-- name: Deploy Brewfile
-  ansible.builtin.copy:
-    src: Brewfile
-    dest: "{{ ansible_user_dir }}/Brewfile"
-    mode: "0644"
+- name: Add Homebrew taps
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ brew_taps }}"
 
-- name: Install packages from Brewfile
+- name: Install Homebrew formulae
+  community.general.homebrew:
+    name: "{{ brew_formulae }}"
+    state: present
+
+- name: Install Homebrew casks
+  community.general.homebrew_cask:
+    name: "{{ brew_casks }}"
+    state: present
+
+- name: Install VSCode extensions
   ansible.builtin.command:
-    cmd: brew bundle install --file={{ ansible_user_dir }}/Brewfile --no-lock
-  register: brew_bundle
-  changed_when: "'Installing' in brew_bundle.stdout or 'Downloading' in brew_bundle.stdout"
+    cmd: code --install-extension {{ item }} --force
+  loop: "{{ brew_vscode_extensions }}"
+  changed_when: false
