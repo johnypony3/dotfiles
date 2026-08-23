@@ -38,3 +38,19 @@ if [[ -z "$TMUX" ]]; then
     tmux new-session
   fi
 fi
+
+# rsync stuff
+
+# Enable the advanced completion system
+autoload -Uz compinit
+compinit
+
+setopt no_auto_remove_slash
+
+# Force rsync, ssh, and scp to use hosts and users from your system config
+zstyle ':completion:*:(ssh|scp|rsync):*' hosts
+zstyle ':completion:*:(ssh|scp|rsync):*' users
+
+# Prevent duplicate or broken formatting patterns
+zstyle ':completion:*:(ssh|scp|rsync):*' ignored-patterns '*(.|:)*'
+
