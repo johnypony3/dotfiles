@@ -42,6 +42,7 @@ brew_casks:
   - claude-code
   - docker-desktop
   - font-courier-prime
+  - font-jetbrains-mono-nerd-font
   - google-chrome
   - handbrake-app
   - home-assistant
