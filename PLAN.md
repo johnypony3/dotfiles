@@ -58,9 +58,21 @@ dotfiles/
 └── PLAN.md                # this file
 ```
 
+### 3. NAS share mount (import from skynet)
+
+There is uncommitted work in `../skynet` (the `mount-nas-mac.yml` playbook and
+related files) that configures the Mac NAS mount via LaunchAgent. That work
+belongs here, not in skynet.
+
+Steps:
+1. Copy the uncommitted NAS mount files from `../skynet` into a `roles/nas/` role here
+2. Remove those files from the skynet repo (leaving no trace)
+3. Wire the `nas` role into `mac.yml`
+
 ## First steps
 
 1. Ask Edward what general laptop config he wants (brew packages, defaults, etc.)
 2. Build the `keyboard` role with the Caps Lock → Ctrl LaunchAgent
 3. Wire up the main `mac.yml` playbook
-4. Commit and document how to run it (`ansible-playbook playbooks/mac.yml`)
+4. Import NAS mount work from skynet into a `roles/nas/` role, remove from skynet
+5. Commit and document how to run it (`ansible-playbook playbooks/mac.yml`)

@@ -1,0 +1,18 @@
+---
+- name: Deploy Caps Lock → Ctrl LaunchAgent plist
+  ansible.builtin.copy:
+    src: com.local.hidutil.keyboard.plist
+    dest: "{{ ansible_user_dir }}/Library/LaunchAgents/com.local.hidutil.keyboard.plist"
+    mode: "0644"
+
+- name: Load LaunchAgent
+  ansible.builtin.command:
+    cmd: launchctl load -w "{{ ansible_user_dir }}/Library/LaunchAgents/com.local.hidutil.keyboard.plist"
+  changed_when: false
+
+- name: Apply Caps Lock → Ctrl remap immediately
+  ansible.builtin.command:
+    cmd: >
+      /usr/bin/hidutil property --set
+      '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x7000000E0}]}'
+  changed_when: false
