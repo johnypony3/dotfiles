@@ -1,0 +1,24 @@
+---
+- name: Install fzf
+  ansible.builtin.command:
+    cmd: brew install fzf
+    creates: /opt/homebrew/bin/fzf
+
+- name: Add tmux session picker to .zshrc
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.zshrc"
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED - tmux session picker"
+    block: |
+      if [[ -z "$TMUX" ]]; then
+        if tmux ls &>/dev/null; then
+          session=$(tmux ls -F '#{session_name}' | fzf --prompt='session: ' --height=~40% --reverse)
+          if [[ -n "$session" ]]; then
+            tmux attach -t "$session"
+          else
+            tmux new-session
+          fi
+        else
+          tmux new-session
+        fi
+      fi
