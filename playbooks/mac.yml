@@ -8,6 +8,7 @@
     - role: brew
     - role: keyboard
     - role: iterm2
+    - role: btt
     - role: shares
     - role: tmux
     - role: zsh

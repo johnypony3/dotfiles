@@ -1,0 +1,12 @@
+---
+# BTT must be running for the import to work.
+# On a fresh machine, launch BTT once manually before running this playbook.
+
+- name: Import BetterTouchTool preset
+  ansible.builtin.command:
+    cmd: >
+      osascript -e
+      'tell application "BetterTouchTool" to import_preset
+      "{{ role_path }}/files/Default.bttpreset"'
+  changed_when: true
+  failed_when: false
