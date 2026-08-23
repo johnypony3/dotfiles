@@ -1,13 +1,6 @@
 ---
-- name: Create Neovim config directory
-  ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.config/nvim"
-    state: directory
-    mode: "0755"
-
-- name: Deploy Neovim config
-  ansible.builtin.copy:
-    src: nvim/
-    dest: "{{ ansible_user_dir }}/.config/nvim/"
-    mode: "0644"
-    directory_mode: "0755"
+- name: Clone NvChad starter
+  ansible.builtin.git:
+    repo: https://github.com/NvChad/starter
+    dest: "{{ ansible_user_dir }}/.config/nvim"
+    update: false
