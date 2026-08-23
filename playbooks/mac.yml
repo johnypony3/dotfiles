@@ -5,6 +5,7 @@
   gather_facts: true
 
   roles:
+    - role: brew
     - role: keyboard
     - role: shares
     - role: tmux
