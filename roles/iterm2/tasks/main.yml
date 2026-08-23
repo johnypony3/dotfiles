@@ -1,0 +1,5 @@
+---
+- name: Import iTerm2 preferences
+  ansible.builtin.command:
+    cmd: defaults import com.googlecode.iterm2 {{ role_path }}/files/com.googlecode.iterm2.plist
+  changed_when: true
