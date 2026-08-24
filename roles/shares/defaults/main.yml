@@ -1,7 +1,7 @@
 ---
 nas_user: "edward"
 nas_home: "/Users/{{ nas_user }}"
-smb_server: "192.168.9.7"
+smb_server: "nas"
 smb_user: "edward"
 smb_shares:
   - { share: "share", mount_point: "nas/share" }
