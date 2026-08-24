@@ -4,8 +4,8 @@ nas_home: "/Users/{{ nas_user }}"
 smb_server: "192.168.9.7"
 smb_user: "edward"
 smb_shares:
-  - { share: "share", mount_point: "nas/share" }
-  - { share: "edward", mount_point: "nas/edward" }
+  - { share: "Public", mount_point: "nas/public" }
+  - { share: "Edward", mount_point: "nas/edward" }
 mount_script: "{{ nas_home }}/.local/bin/mount-nas.sh"
 launchagent_label: "com.theemm.nasmount"
 launchagent_plist: "{{ nas_home }}/Library/LaunchAgents/{{ launchagent_label }}.plist"
