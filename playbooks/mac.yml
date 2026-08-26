@@ -4,12 +4,26 @@
   connection: local
   gather_facts: true
 
+  vars:
+    # Add new machines here explicitly — an unrecognized hostname fails the
+    # playbook rather than silently defaulting to a profile.
+    host_profiles:
+      edward-laptop: personal
+      LNEJ217RV7F9Q: work
+    profile: "{{ host_profiles[ansible_facts['nodename']] }}"
+
+  pre_tasks:
+    - name: Load profile-specific variables ({{ profile }})
+      ansible.builtin.include_vars:
+        file: "{{ playbook_dir }}/../group_vars/{{ profile }}.yml"
+
   roles:
     - role: brew
     - role: keyboard
     - role: iterm2
     - role: btt
     - role: shares
+      when: profile == 'personal'
     - role: tmux
     - role: zsh
     - role: neovim

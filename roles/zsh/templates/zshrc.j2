@@ -1,6 +1,10 @@
 # {{ ansible_managed }}
 
 export ZSH="$HOME/.oh-my-zsh"
+export HOMEBREW_NO_ENV_HINTS=1
+export CLAUDE_CODE_SKIP_VSCODE_INSTALL=1
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+export PATH="{{ ansible_facts['user_dir'] }}/.local/bin:$PATH"
 
 if [[ -n "$SSH_CONNECTION" ]]; then
     ZSH_THEME="simple"
@@ -8,21 +12,60 @@ else
     ZSH_THEME="robbyrussell"
 fi
 
-ZSH_TMUX_AUTOCONNECT=true
-[[ -o interactive ]] && ZSH_TMUX_AUTOSTART=true
+{% if profile == 'work' %}
+plugins=(git aliases history kubectl pass tmux)
+{% else %}
 plugins=(git tmux)
+{% endif %}
 
 source $ZSH/oh-my-zsh.sh
 
 # --- aliases ---
 
 alias ls='ls --color=never'
+alias ll='ls -la'
 alias python=python3
 alias pip=pip3
 
+{% if profile == 'work' %}
+alias pw='pass show -c dev/pass'
+alias yb='pass show -c dev/yubi'
+alias ai='ai-manager'
+{% endif %}
+
 # --- env ---
 
+{% if kubeconfig_path %}
 export KUBECONFIG={{ kubeconfig_path }}
+{% endif %}
+
+{% if profile == 'work' %}
+export PATH="$HOME/scripts:$PATH"
+export AWS_PROFILE=tm-prod-ReadOnly-Techops
+export NEXUS_AUTH=$(pass show prod/nexus/user):$(pass show prod/nexus/pass)
+export NEXUS_API=$(pass show prod/nexus/repos/powershellget/nuget_api)
+export GL_USER={{ ansible_facts['user_id'] }}
+export GL_TOKEN=$(pass show prod/gl-access/api)
+export GITLAB_TOKEN=$GL_TOKEN
+export CLAUDE_PLUGIN_DIR="{{ ansible_facts['user_dir'] }}/Source/claude-plugins-official"
+export VAULT_ADDR="https://vault.tktm.io"
+
+# Certs bundle
+export SSL_CERT_FILE="$HOME/.certs/ca-bundle.pem"
+export REQUESTS_CA_BUNDLE="$SSL_CERT_FILE"
+export AWS_CA_BUNDLE="$SSL_CERT_FILE"
+export CURL_CA_BUNDLE="$SSL_CERT_FILE"
+export HTTPLIB2_CA_CERTS="$SSL_CERT_FILE"
+
+# gcloud
+export PATH="/opt/homebrew/share/google-cloud-sdk/bin:$PATH"
+export CLOUDSDK_PYTHON_SITEPACKAGES=1
+
+fpath+=~/.zfunc
+
+export CONFLUENCE_PAT="$(security find-generic-password -a "$USER" -s CONFLUENCE_PAT -w 2>/dev/null)"
+export JIRA_PAT="$(security find-generic-password -a "$USER" -s JIRA_PAT -w 2>/dev/null)"
+{% endif %}
 
 # --- tmux session picker (on new interactive shell outside tmux) ---
 
@@ -39,8 +82,6 @@ if [[ -z "$TMUX" ]]; then
   fi
 fi
 
-# rsync stuff
-
 # Enable the advanced completion system
 autoload -Uz compinit
 compinit
@@ -54,3 +95,11 @@ zstyle ':completion:*:(ssh|scp|rsync):*' users
 # Prevent duplicate or broken formatting patterns
 zstyle ':completion:*:(ssh|scp|rsync):*' ignored-patterns '*(.|:)*'
 
+# Strip inherited CLAUDE_CODE_* env so nested claude launches get their own session/transcript.
+claude() {
+  env -u CLAUDE_CODE_CHILD_SESSION \
+      -u CLAUDE_CODE_SESSION_ID \
+      -u CLAUDE_CODE_ENTRYPOINT \
+      -u CLAUDECODE \
+      command claude "$@"
+}

@@ -1,0 +1,38 @@
+---
+# Personal-laptop-only packages/config — homelab tooling, NAS, personal dev prefs.
+
+brew_taps_extra:
+  - anthropics/claude
+  - hudochenkov/sshpass
+
+brew_formulae_extra:
+  - argocd
+  - black
+  - fzf
+  - golangci-lint
+  - handbrake
+  - isort
+  - mongosh
+  - prettier
+  - qpdf
+  - ruff
+  - stylua
+  - transmission-cli
+  - vlc
+  - yamllint
+
+brew_casks_extra:
+  - claude
+  - claude-code
+  - docker-desktop
+  - handbrake-app
+  - home-assistant
+  - launchcontrol
+  - mongodb-compass
+  - mqttx
+  - plex
+  - qbittorrent
+  - tailscale-app
+  - transmission
+
+kubeconfig_path: "{{ ansible_facts['user_dir'] }}/Documents/git/skynet/kubeconfig-zorlac"

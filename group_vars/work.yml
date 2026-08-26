@@ -1,0 +1,61 @@
+---
+# Work-laptop-only packages/config — Ticketmaster tooling.
+# Sourced from `brew bundle dump` on the work laptop, minus anything already
+# common. Go-toolchain (`go install ...`) and npm-installed CLI tools from
+# that dump are not codified here — no existing role manages those.
+
+brew_taps_extra:
+  - ankitpokhrel/jira-cli
+  - tm/homebrew
+
+brew_formulae_extra:
+  - arping
+  - bazelisk
+  - blueutil
+  - colima
+  - docker-buildx
+  - docker-compose
+  - dotnet
+  - git-filter-repo
+  - gitleaks
+  - glab
+  - goaccess
+  - govc
+  - grpcurl
+  - hashicorp/tap/packer
+  - hashicorp/tap/terraform
+  - hashicorp/tap/vault
+  - imessage-exporter
+  - jira-cli
+  - jq
+  - k6
+  - nuget
+  - pandoc
+  - pass
+  - pipx
+  - powershell
+  - prometheus
+  - protobuf
+  - python@3.13
+  - python-tk@3.13
+  - rsync
+  - shellcheck
+  - speedtest-cli
+  - sshpass
+  - syft
+  - telnet
+  - terraform-docs
+  - tflint
+  - wget
+  - yq
+
+brew_casks_extra:
+  - chatgpt
+  - gcloud-cli
+  - google-drive
+  - powershell
+  - royal-tsx
+  - session-manager-plugin
+  - tm/homebrew/tech-pass
+  - vagrant
+  - virtualbox
