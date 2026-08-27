@@ -67,6 +67,14 @@ description = "show cheatsheet"
 width = 66
 height = 30
 
+# Plugin-action bindings live in the user config, not the plugin manifest
+# (plugins.mdx "Keybindings") - herdr silently ignores them in herdr-plugin.toml.
+[[keys.command]]
+key = "prefix+shift+q"
+type = "plugin_action"
+command = "edward.quad-layout.apply"
+description = "open quad layout tab"
+
 [[keys.command]]
 key = "prefix+!"
 type = "shell"

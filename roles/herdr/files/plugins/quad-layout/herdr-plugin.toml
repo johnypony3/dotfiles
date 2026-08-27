@@ -15,9 +15,3 @@ id = "apply"
 title = "Open quad layout"
 contexts = ["workspace"]
 command = ["bash", "quad-layout.sh"]
-
-[[keys.command]]
-key = "prefix+shift+q"
-type = "plugin_action"
-command = "edward.quad-layout.apply"
-description = "open quad layout tab"
