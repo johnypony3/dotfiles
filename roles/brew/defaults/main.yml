@@ -10,6 +10,7 @@ brew_formulae:
   - docker
   - ffmpeg
   - gh
+  - glances
   - go
   - helm
   - kubernetes-cli
@@ -20,6 +21,7 @@ brew_formulae:
   - rclone
   - tesseract
   - tmux
+  - tmuxinator
 brew_formulae_extra: []
 
 brew_casks:

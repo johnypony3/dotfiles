@@ -1,0 +1,8 @@
+---
+name: quad
+root: ~/
+
+windows:
+  - quad:
+      panes:
+        - ~/.tmux/quad-layout.sh
