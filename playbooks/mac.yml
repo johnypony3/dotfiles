@@ -29,3 +29,6 @@
     - role: zsh
     - role: neovim
     - role: claude
+    # cmux disabled in favor of herdr; role kept for reference
+    # - role: cmux
+    - role: herdr

@@ -1,0 +1,4 @@
+---
+herdr_config_dir: "{{ ansible_facts['user_dir'] }}/.config/herdr"
+herdr_plugin_id: "edward.quad-layout"
+herdr_plugin_name: quad-layout

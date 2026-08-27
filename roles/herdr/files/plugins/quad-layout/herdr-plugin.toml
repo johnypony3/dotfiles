@@ -1,0 +1,17 @@
+id = "edward.quad-layout"
+name = "Quad Layout"
+version = "0.1.0"
+# Plugin actions shipped in 0.7.0 (CHANGELOG.md); [[startup]] hooks specifically
+# shipped in 0.7.5, and this manifest uses both.
+min_herdr_version = "0.7.5"
+description = "Four-column layout with glances in the bottom-right pane, ported from tmux quad-layout.sh"
+platforms = ["macos"]
+
+[[startup]]
+command = ["bash", "quad-layout.sh"]
+
+[[actions]]
+id = "apply"
+title = "Open quad layout"
+contexts = ["workspace"]
+command = ["bash", "quad-layout.sh"]

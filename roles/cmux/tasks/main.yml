@@ -1,0 +1,34 @@
+---
+- name: Ensure cmux config directory exists
+  ansible.builtin.file:
+    path: "{{ cmux_config_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Ensure ghostty config directory exists
+  ansible.builtin.file:
+    path: "{{ cmux_ghostty_config_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Deploy cmux.json
+  ansible.builtin.copy:
+    src: cmux.json
+    dest: "{{ cmux_config_dir }}/cmux.json"
+    mode: "0644"
+    backup: true
+    validate: "python3 -c 'import json,sys; json.load(open(sys.argv[1]))' %s"
+
+- name: Deploy ghostty config for terminal rendering
+  ansible.builtin.copy:
+    src: ghostty.config
+    dest: "{{ cmux_ghostty_config_dir }}/config"
+    mode: "0644"
+    backup: true
+
+- name: Deploy cmux quad-pane layout script
+  ansible.builtin.copy:
+    src: cmux-quad-layout.sh
+    dest: "{{ cmux_layout_script }}"
+    mode: "0755"
+    backup: true
