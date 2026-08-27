@@ -1,0 +1,84 @@
+[keys]
+prefix = "ctrl+a"
+
+# --- pinned native defaults (verified against `herdr --default-config`, 0.8.2) ---
+help                      = "prefix+?"
+settings                  = "prefix+s"
+new_workspace             = "prefix+shift+n"
+new_worktree              = "prefix+shift+g"
+rename_workspace          = "prefix+shift+w"
+close_workspace           = "prefix+shift+d"
+workspace_picker          = "prefix+w"      # tmux prefix-s analog (session/workspace switch)
+goto                      = "prefix+g"      # closest broad picker; no tab-scoped list exists in herdr
+navigate_workspace_up     = "up"
+navigate_workspace_down   = "down"
+navigate_pane_left        = "h"
+navigate_pane_down        = "j"
+navigate_pane_up          = "k"
+navigate_pane_right       = "l"
+detach                    = "prefix+q"
+reload_config             = "prefix+shift+r"
+open_notification_target  = "prefix+o"
+new_tab                   = "prefix+c"
+rename_tab                = "prefix+shift+t"
+previous_tab              = "prefix+p"
+next_tab                  = "prefix+n"
+switch_tab                = "prefix+1..9"
+close_tab                 = "prefix+shift+x"
+rename_pane               = "prefix+shift+p"
+edit_scrollback           = "prefix+e"      # herdr's copy-mode entry; tmux prefix-[ analog
+focus_pane_left           = "prefix+h"
+focus_pane_down           = "prefix+j"
+focus_pane_up             = "prefix+k"
+focus_pane_right          = "prefix+l"
+cycle_pane_next           = "prefix+tab"
+cycle_pane_previous       = "prefix+shift+tab"
+split_vertical            = "prefix+v"      # herdr "vertical" = side-by-side (tmux bind |)
+split_horizontal          = "prefix+minus"  # herdr "horizontal" = stacked (tmux bind -)
+close_pane                = "prefix+x"
+zoom                      = "prefix+z"
+resize_mode               = "prefix+r"      # modal resize, not a repeat flag like tmux's bind -r
+toggle_sidebar            = "prefix+b"
+remote_image_paste        = "ctrl+v"        # hardcoded default, not prefix-relative
+
+# --- unset-by-default fields, now set (tmux `bind -r H/J/K/L resize-pane 5` equivalent) ---
+# Bound as direct chords per the default-config's own suggested values, not prefix+,
+# to avoid clashing with plain ctrl+alt+arrows (owned by GNOME/Ghostty/Konsole).
+resize_pane_left  = "ctrl+shift+alt+left"
+resize_pane_down  = "ctrl+shift+alt+down"
+resize_pane_up    = "ctrl+shift+alt+up"
+resize_pane_right = "ctrl+shift+alt+right"
+
+# --- custom command keybindings ---
+
+[[keys.command]]
+key = "prefix+t"
+type = "popup"
+command = "exec \"${SHELL:-sh}\""
+description = "open scratch terminal"
+width = "80%"
+height = "80%"
+
+[[keys.command]]
+key = "prefix+/"
+type = "popup"
+command = "cat ~/.tmux/cheatsheet.txt"
+description = "show cheatsheet"
+width = 66
+height = 30
+
+[[keys.command]]
+key = "prefix+!"
+type = "shell"
+# No native "break pane to new tab" keybinding exists; wraps the CLI equivalent
+# (`herdr pane move <pane_id> --new-tab`).
+command = "\"$HERDR_BIN_PATH\" pane move \"$HERDR_ACTIVE_PANE_ID\" --new-tab"
+description = "break pane to new tab"
+
+[ui]
+# tmux `set -g mouse on` equivalent.
+mouse_capture = true
+# Copy-mode selection is native mouse drag-select / double-click, auto-copying on release.
+# herdr's copy mode (edit_scrollback) has its own fixed keys; tmux's Ctrl-v
+# rectangle-select has no known equivalent, so the vi copy-mode binds are dropped.
+copy_on_select = true

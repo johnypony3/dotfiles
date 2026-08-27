@@ -67,21 +67,6 @@ export CONFLUENCE_PAT="$(security find-generic-password -a "$USER" -s CONFLUENCE
 export JIRA_PAT="$(security find-generic-password -a "$USER" -s JIRA_PAT -w 2>/dev/null)"
 {% endif %}
 
-# --- tmux session picker (on new interactive shell outside tmux) ---
-
-if [[ -z "$TMUX" ]]; then
-  if tmux ls &>/dev/null; then
-    session=$(tmux ls -F '#{session_name}' | fzf --prompt='session: ' --height=~40% --reverse)
-    if [[ -n "$session" ]]; then
-      tmux attach -t "$session"
-    else
-      tmux new-session
-    fi
-  else
-    tmux new-session
-  fi
-fi
-
 # Enable the advanced completion system
 autoload -Uz compinit
 compinit

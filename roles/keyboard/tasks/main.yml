@@ -4,6 +4,7 @@
     src: com.local.hidutil.keyboard.plist
     dest: "{{ ansible_facts['user_dir'] }}/Library/LaunchAgents/com.local.hidutil.keyboard.plist"
     mode: "0644"
+    backup: true
 
 - name: Load LaunchAgent
   ansible.builtin.command:

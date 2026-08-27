@@ -20,12 +20,14 @@
     src: mount-nas.sh.j2
     dest: "{{ mount_script }}"
     mode: "0700"
+    backup: true
 
 - name: Install the LaunchAgent
   ansible.builtin.template:
     src: nasmount.plist.j2
     dest: "{{ launchagent_plist }}"
     mode: "0644"
+    backup: true
 
 - name: Determine this user's UID
   ansible.builtin.command: id -u

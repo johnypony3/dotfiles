@@ -1,0 +1,45 @@
+---
+- name: Ensure herdr config directory exists
+  ansible.builtin.file:
+    path: "{{ herdr_config_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Ensure herdr quad-layout plugin directory exists
+  ansible.builtin.file:
+    path: "{{ herdr_config_dir }}/plugins/{{ herdr_plugin_name }}"
+    state: directory
+    mode: "0755"
+
+- name: Deploy herdr config.toml
+  ansible.builtin.copy:
+    src: config.toml
+    dest: "{{ herdr_config_dir }}/config.toml"
+    mode: "0644"
+    backup: true
+
+- name: Deploy quad-layout plugin manifest
+  ansible.builtin.copy:
+    src: plugins/quad-layout/herdr-plugin.toml
+    dest: "{{ herdr_config_dir }}/plugins/{{ herdr_plugin_name }}/herdr-plugin.toml"
+    mode: "0644"
+    backup: true
+
+- name: Deploy quad-layout plugin script
+  ansible.builtin.copy:
+    src: plugins/quad-layout/quad-layout.sh
+    dest: "{{ herdr_config_dir }}/plugins/{{ herdr_plugin_name }}/quad-layout.sh"
+    mode: "0755"
+    backup: true
+
+# A broken herdr install must fail the play here, not silently skip the link.
+- name: Check whether the quad-layout plugin is already linked
+  ansible.builtin.command:
+    cmd: herdr plugin list --json
+  register: herdr_plugin_list
+  changed_when: false
+
+- name: Link the quad-layout plugin
+  ansible.builtin.command:
+    cmd: "herdr plugin link {{ herdr_config_dir }}/plugins/{{ herdr_plugin_name }}"
+  when: herdr_plugin_id not in herdr_plugin_list.stdout

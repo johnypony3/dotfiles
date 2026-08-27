@@ -19,12 +19,14 @@
     dest: "{{ claude_dir }}/.i-have-adhd-always"
     mode: "0644"
     force: false
+    backup: true
 
 - name: Deploy settings merge helper
   ansible.builtin.copy:
     src: merge-claude-settings.py
     dest: "{{ claude_dir }}/merge-claude-settings.py"
     mode: "0755"
+    backup: true
 
 - name: Register hooks and i-have-adhd plugin in settings.json
   ansible.builtin.command:

@@ -1,0 +1,122 @@
+{
+  "$schema": "https://raw.githubusercontent.com/manaflow-ai/cmux/main/web/data/cmux.schema.json",
+  "schemaVersion": 1,
+  "app": {
+    "confirmQuit": "dirty-only"
+  },
+  "paneBorderColor": "#444444",
+  "activePaneBorderColor": "#00AFFF",
+  "terminal": {
+    "textBoxDefaultSubmitAction": "claude"
+  },
+  "diffViewer": {
+    "defaultLayout": "split"
+  },
+  "sidebar": {
+    "showAgentActivity": true,
+    "loadingSpinnerPosition": "leading",
+    "notificationBadgePosition": "leading"
+  },
+
+  "actions": {
+    "quad-panel": {
+      "title" : "quad-panel",
+      "type" : "workspace",
+      "workspace" : {
+        "cwd" : "~",
+        "layout" : {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "pane" : {
+                    "surfaces" : [
+                      {
+                        "type" : "terminal"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "pane" : {
+                    "surfaces" : [
+                      {
+                        "type" : "terminal"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "direction" : "vertical",
+              "split" : 0.5
+            },
+            {
+              "children" : [
+                {
+                  "pane" : {
+                    "surfaces" : [
+                      {
+                        "focus" : true,
+                        "type" : "terminal"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "children" : [
+                    {
+                      "pane" : {
+                        "surfaces" : [
+                          {
+                            "type" : "terminal"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "children" : [
+                        {
+                          "pane" : {
+                            "surfaces" : [
+                              {
+                                "type" : "terminal"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "pane" : {
+                            "surfaces" : [
+                              {
+                                "type" : "terminal"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "direction" : "vertical",
+                      "split" : 0.5
+                    }
+                  ],
+                  "direction" : "horizontal",
+                  "split" : 0.73
+                }
+              ],
+              "direction" : "horizontal",
+              "split" : 0.36
+            }
+          ],
+          "direction" : "horizontal",
+          "split" : 0.11
+        },
+        "name" : "quad-panel"
+      }
+    }
+  },
+
+  "ui": {
+    "newWorkspace": {
+      "action": "quad-panel"
+    }
+  }
+}
