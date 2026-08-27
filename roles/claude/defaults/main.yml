@@ -1,0 +1,6 @@
+---
+claude_dir: "{{ ansible_facts['user_dir'] }}/.claude"
+
+claude_hooks:
+  - git-confirm.sh
+  - guard-fs-deletes.sh

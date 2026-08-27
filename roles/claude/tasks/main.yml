@@ -1,0 +1,33 @@
+---
+- name: Ensure ~/.claude/hooks directory exists
+  ansible.builtin.file:
+    path: "{{ claude_dir }}/hooks"
+    state: directory
+    mode: "0755"
+
+- name: Deploy Claude hooks
+  ansible.builtin.copy:
+    src: "hooks/{{ item }}"
+    dest: "{{ claude_dir }}/hooks/{{ item }}"
+    mode: "0755"
+    backup: true
+  loop: "{{ claude_hooks }}"
+
+- name: Enable always-on ADHD mode
+  ansible.builtin.copy:
+    content: ""
+    dest: "{{ claude_dir }}/.i-have-adhd-always"
+    mode: "0644"
+    force: false
+
+- name: Deploy settings merge helper
+  ansible.builtin.copy:
+    src: merge-claude-settings.py
+    dest: "{{ claude_dir }}/merge-claude-settings.py"
+    mode: "0755"
+
+- name: Register hooks and i-have-adhd plugin in settings.json
+  ansible.builtin.command:
+    cmd: "{{ claude_dir }}/merge-claude-settings.py {{ claude_dir }}/settings.json"
+  register: claude_settings_merge
+  changed_when: claude_settings_merge.stdout == "CHANGED"
