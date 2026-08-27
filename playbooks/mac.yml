@@ -9,6 +9,7 @@
     # playbook rather than silently defaulting to a profile.
     host_profiles:
       edward-laptop: personal
+      edward-laptop.local: personal
       LNEJ217RV7F9Q: work
     profile: "{{ host_profiles[ansible_facts['nodename']] }}"
 

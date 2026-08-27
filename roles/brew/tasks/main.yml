@@ -10,6 +10,12 @@
     state: present
   loop: "{{ brew_taps + brew_taps_extra }}"
 
+- name: Trust third-party taps
+  ansible.builtin.command:
+    cmd: brew trust {{ (brew_taps + brew_taps_extra) | join(' ') }}
+  changed_when: false
+  failed_when: false
+
 - name: Install Homebrew formulae
   community.general.homebrew:
     name: "{{ brew_formulae + brew_formulae_extra }}"
