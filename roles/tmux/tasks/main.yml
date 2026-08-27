@@ -15,12 +15,41 @@
     src: tmux.conf
     dest: "{{ ansible_facts['user_dir'] }}/.tmux.conf"
     mode: "0644"
+    backup: true
 
 - name: Deploy cheatsheet
   ansible.builtin.copy:
     src: cheatsheet.txt
     dest: "{{ ansible_facts['user_dir'] }}/.tmux/cheatsheet.txt"
     mode: "0644"
+    backup: true
+
+- name: Deploy quad-pane layout script
+  ansible.builtin.copy:
+    src: quad-layout.sh
+    dest: "{{ ansible_facts['user_dir'] }}/.tmux/quad-layout.sh"
+    mode: "0755"
+    backup: true
+
+- name: Deploy pane 1+2 zoom script
+  ansible.builtin.copy:
+    src: zoom12.sh
+    dest: "{{ ansible_facts['user_dir'] }}/.tmux/zoom12.sh"
+    mode: "0755"
+    backup: true
+
+- name: Ensure ~/.tmuxinator directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.tmuxinator"
+    state: directory
+    mode: "0755"
+
+- name: Deploy quad tmuxinator project
+  ansible.builtin.copy:
+    src: quad.yml
+    dest: "{{ ansible_facts['user_dir'] }}/.tmuxinator/quad.yml"
+    mode: "0644"
+    backup: true
 
 - name: Install tmux-resurrect
   ansible.builtin.git:
