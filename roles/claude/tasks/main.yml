@@ -28,6 +28,19 @@
     mode: "0755"
     backup: true
 
+- name: Ensure ~/.claude/skills/task-fan-out directory exists
+  ansible.builtin.file:
+    path: "{{ claude_dir }}/skills/task-fan-out"
+    state: directory
+    mode: "0755"
+
+- name: Deploy task-fan-out skill
+  ansible.builtin.copy:
+    src: skills/task-fan-out/SKILL.md
+    dest: "{{ claude_dir }}/skills/task-fan-out/SKILL.md"
+    mode: "0644"
+    backup: true
+
 - name: Register hooks and i-have-adhd plugin in settings.json
   ansible.builtin.command:
     cmd: "{{ claude_dir }}/merge-claude-settings.py {{ claude_dir }}/settings.json"
