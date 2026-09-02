@@ -13,6 +13,7 @@ brew_formulae_extra:
   - handbrake
   - isort
   - mongosh
+  - pandoc
   - prettier
   - qpdf
   - ruff
@@ -28,6 +29,7 @@ brew_casks_extra:
   - handbrake-app
   - home-assistant
   - launchcontrol
+  - libreoffice
   - mongodb-compass
   - mqttx
   - plex
